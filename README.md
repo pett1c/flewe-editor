@@ -12,28 +12,28 @@ Für LP 9 habe ich auch ein Thema fertig, und ich bin sehr froh darüber (dass i
 
 
 ## 10.01
-- [x] Editor-Ordner erstellen und darin den Code für die Erstellung eines einfachen Editor-Fensters.
-- [x] Raster und eine Farbpalette erstellen.
-- [x] Möglichkeit, die Grösse des Rasters zu steuern erstellen.
-- [x] Möglichkeit, der Platzierung von Punkten mit einer bestimmten Farbe auf dem Raster zu erstellen.
+- [x] Erstellen eines Editorfensters mit einer Grundstruktur und einem Menü für den Zugriff über „Flow Free/Level Editor“.
+- [x] Implementieren ein Raster-Rendering-System mit anpassbaren Abmessungen (width und height) und Rasterlinienanzeige.
+- [x] Hinzufügen einer Basispalette mit visueller Anzeige der ausgewählten Farben und Blockierung bereits verwendeter Farben.
+- [x] Implementieren ein System zur Platzierung von Punkten per Mausklick mit automatischer Verknüpfung zum Raster und Paarung von Punkten gleicher Farbe.
 
 Um heute zu beginnen, habe ich mir Gedanken darüber gemacht, wie ich dieses Toolkit zur Erstellung von Levels implementieren könnte. Zuerst dachte ich daran, etwas Neues auszuprobieren, eine neue Programmiersprache oder eine neue Bibliothek in den Sprachen, die ich bereits kenne, aber schnell genug kam ich zu dem Schluss, dass es viel einfacher und effizienter ist, es in Unity zu implementieren. Zuerst dachte ich daran, ein separates Projekt zu erstellen und .exe zu verwenden, um LevelData-Dateien für das Hauptspiel zu erstellen, aber schnell genug wurde mir klar, dass es eine viel bessere Option gibt, nämlich einen Editor direkt im Projekt mit dem Spiel. Es stellt sich heraus, dass Unity bereits eine Option hat, um Ihre eigenen Editoren für mehr Komfort zu erstellen, die in das obere Unity-Fenster passt. In der Tat, das ist, was ich am Ende zu tun. Zuerst habe ich das Fenster selbst implementiert und dann die Farbpalette und das Raster selbst hinzugefügt. Dann fügte ich die Möglichkeit hinzu, die Grösse des Rasters zu bearbeiten und Punkte auf dem Raster zu platzieren. Damit habe ich bereits die Grundfunktionalität für die Erstellung von Levels, allerdings ohne die Möglichkeit, sie in die LevelData-Datei zu exportieren.
 
 
 ## 17.01
-- [ ] Fügen die gesamte Farbpalette des Spiels hinzu.
-- [ ] Hinzufügen der Möglichkeit, direkt im Editorfenster zu testen.
-- [ ] Hinzufügen der Möglichkeit zu exportieren.
-- [ ] Hinzufügen der Möglichkeit, Hinweise direkt im Editor-Fenster zu erstellen.
+- [x] Aktualisieren die Palette, indem absolut alle Farben hinzufügen, die im Spiel verwendet werden.
+- [x] Fügen einen Testmodus hinzu, der das Spielgeschehen vollständig emuliert und die Möglichkeit bietet, Linien zwischen gleichfarbigen Punkten nach den Spielregeln zu ziehen.
+- [x] Erstellung eines Systems zum Speichern und Anzeigen von Linien mit der Möglichkeit, die letzte Aktion abzubrechen und Überschneidungen zu verhindern
+- [x] Implementieren die Mechanik des Löschens bestehender Linien, wenn Sie mit dem Zeichnen einer neuen Linie der gleichen Farbe beginnen.
 
-...
+Heute habe ich damit begonnen, die Basisfarbpalette durch eine Palette zu ersetzen, die alle im Spiel verwendeten Farben enthält. Als Nächstes habe ich mich daran gemacht, einen Testmodus direkt in den Editor einzubauen, damit ich jeden Level, den ich erstellt habe, bequem testen kann, bevor ich ihn speichere, was mir die meisten Schwierigkeiten bereitet hat. Es war schwierig, die Grundfunktionalität des Spiels neu zu implementieren, weil ich vergessen hatte, wie ich es im Hauptspiel gemacht hatte, ich musste eine Menge Dinge korrigieren und es ist immer noch nicht in perfektem Zustand, aber ich habe beschlossen, dass diese Qualität für den Editor ganz gut ist. Parallel zur Implementierung des Gameplays wiederholte ich auch das in LineManager implementierte System zum Speichern und Anzeigen von Linien, wiederum direkt im Editor. Und am Ende habe ich die Mechanik des Löschens von Linien zu Beginn des Zeichnens einer neuen Linie implementiert.
 
 
 ## 24.01
-- [ ] ...
-- [ ] ...
-- [ ] ...
-- [ ] ...
+- [ ] Hinzufügen der Funktionalität des Level-Exports zu ScriptableObject mit automatischer Nummerierung und Speicherung in einem Ordner.
+- [ ] Hinzufügen der Möglichkeit, einen bestehenden Level über die Dropdown-Liste aller Dateien zu laden, um ihn zu bearbeiten.
+- [ ] Entfernen die Funktion zur Erstellung von Hinweisen aus dem Hauptspiel
+- [ ] Implementierung der Funktion zur Erstellung von Hinweisen direkt im Editor und der Möglichkeit, diese zu ändern
 
 ...
 
