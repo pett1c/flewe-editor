@@ -14,6 +14,11 @@ public class FlowLevelEditor : EditorWindow
     private Vector2 scrollPosition;
     private LevelData currentLevel;
     private bool isTestMode = false;
+    private string selectedLevelPath;
+    private bool isEditingExistingLevel = false;
+    private Vector2 levelSelectScrollPosition;
+    private bool showLevelSelector = false;
+    private Dictionary<string, List<string>> levelPaths = new Dictionary<string, List<string>>();
 
     // Тестовые переменные
     private Vector2Int? lastGridPosition;
@@ -72,13 +77,141 @@ public class FlowLevelEditor : EditorWindow
         if (GUILayout.Button("Create New Level"))
         {
             ResetLevel();
+            isEditingExistingLevel = false;
+            selectedLevelPath = null;
         }
 
-        if (GUILayout.Button("Export Level"))
+        if (GUILayout.Button("Edit Existing Level"))
         {
-            ExportLevel();
+            showLevelSelector = true;
+            UpdateLevelPaths();
         }
         EditorGUILayout.EndHorizontal();
+
+        if (isEditingExistingLevel)
+        {
+            EditorGUILayout.Space();
+            if (GUILayout.Button("Save Level"))
+            {
+                SaveExistingLevel();
+            }
+        }
+        else
+        {
+            EditorGUILayout.Space();
+            if (GUILayout.Button("Export Level"))
+            {
+                ExportLevel();
+            }
+        }
+
+        if (showLevelSelector)
+        {
+            DrawLevelSelector();
+        }
+    }
+
+    private void UpdateLevelPaths()
+    {
+        levelPaths.Clear();
+        levelPaths["LevelData"] = new List<string>();
+        levelPaths["EditorLevelData"] = new List<string>();
+
+        // Поиск файлов в папке LevelData
+        string levelDataPath = "Assets/LevelData";
+        if (AssetDatabase.IsValidFolder(levelDataPath))
+        {
+            string[] guids = AssetDatabase.FindAssets("t:LevelData", new[] { levelDataPath });
+            foreach (string guid in guids)
+            {
+                string path = AssetDatabase.GUIDToAssetPath(guid);
+                levelPaths["LevelData"].Add(path);
+            }
+        }
+
+        // Поиск файлов в папке Editor/Levels
+        string editorLevelPath = "Assets/Editor/Levels";
+        if (AssetDatabase.IsValidFolder(editorLevelPath))
+        {
+            string[] guids = AssetDatabase.FindAssets("t:LevelData", new[] { editorLevelPath });
+            foreach (string guid in guids)
+            {
+                string path = AssetDatabase.GUIDToAssetPath(guid);
+                levelPaths["EditorLevelData"].Add(path);
+            }
+        }
+    }
+
+    private void DrawLevelSelector()
+    {
+        EditorGUILayout.Space();
+        EditorGUILayout.LabelField("Select Level to Edit", EditorStyles.boldLabel);
+
+        levelSelectScrollPosition = EditorGUILayout.BeginScrollView(levelSelectScrollPosition,
+            GUILayout.Height(200));
+
+        foreach (var folder in levelPaths.Keys)
+        {
+            EditorGUILayout.LabelField(folder, EditorStyles.boldLabel);
+            EditorGUI.indentLevel++;
+
+            foreach (string path in levelPaths[folder])
+            {
+                string fileName = System.IO.Path.GetFileNameWithoutExtension(path);
+                if (GUILayout.Button(fileName, EditorStyles.label))
+                {
+                    LoadLevel(path);
+                    showLevelSelector = false;
+                }
+            }
+
+            EditorGUI.indentLevel--;
+            EditorGUILayout.Space();
+        }
+
+        EditorGUILayout.EndScrollView();
+
+        if (GUILayout.Button("Close"))
+        {
+            showLevelSelector = false;
+        }
+    }
+
+    private void LoadLevel(string path)
+    {
+        LevelData levelData = AssetDatabase.LoadAssetAtPath<LevelData>(path);
+        if (levelData != null)
+        {
+            selectedLevelPath = path;
+            isEditingExistingLevel = true;
+            gridWidth = levelData.gridWidth;
+            gridHeight = levelData.gridHeight;
+            dotPairs.Clear();
+            dotPairs.AddRange(levelData.dotPairs);
+            ResetTestMode();
+        }
+    }
+
+    private void SaveExistingLevel()
+    {
+        if (string.IsNullOrEmpty(selectedLevelPath))
+            return;
+
+        LevelData levelData = AssetDatabase.LoadAssetAtPath<LevelData>(selectedLevelPath);
+        if (levelData != null)
+        {
+            Undo.RecordObject(levelData, "Update Level Data");
+
+            levelData.gridWidth = gridWidth;
+            levelData.gridHeight = gridHeight;
+            levelData.dotPairs = dotPairs.ToArray();
+
+            EditorUtility.SetDirty(levelData);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+
+            Debug.Log($"Level saved successfully: {selectedLevelPath}");
+        }
     }
 
     private void ExportLevel()
@@ -97,13 +230,13 @@ public class FlowLevelEditor : EditorWindow
         levelData.dotPairs = dotPairs.ToArray();
 
         // Убеждаемся, что директория существует
-        if (!AssetDatabase.IsValidFolder("Assets/Levels"))
+        if (!AssetDatabase.IsValidFolder("Assets/Editor/Levels"))
         {
-            AssetDatabase.CreateFolder("Assets", "Levels");
+            AssetDatabase.CreateFolder("Editor", "Levels");
         }
 
         // Сохраняем asset файл
-        string assetPath = $"Assets/Levels/Level{nextLevelNumber}Data.asset";
+        string assetPath = $"Assets/Editor/Levels/Level{nextLevelNumber}Data.asset";
         AssetDatabase.CreateAsset(levelData, assetPath);
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
