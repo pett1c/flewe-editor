@@ -1,6 +1,13 @@
 # Lern-Periode-8
 ## 10.01.2025 bis 31.01.2025
 
+# fertiges Projekt
+## flewe editor 1.0
+A small editor right in the flewe game project that allows you to easily create new levels, modify existing ones, and export where you need to go in a ready-made version, processed by the game.
+![fleweeditor](https://github.com/user-attachments/assets/51d830e5-0281-46fc-99be-e8abf252c8a8)
+
+
+
 # Grob-Planung
 Was die Noten angeht, so geht es mir ziemlich schlecht, und wahrscheinlich werde ich provisorisch werden, aber natürlich werde ich mich bemühen, so gut es geht. Es ist nur so, dass wir in allen Fächern jetzt ziemlich schwierige Themen für mich persönlich durchgehen, und meine persönliche Verfassung lässt viel zu wünschen übrig. Aber trotzdem versuche ich es weiter und gebe die Hoffnung nicht auf, also wird alles gut werden.
 
@@ -30,23 +37,11 @@ Heute habe ich damit begonnen, die Basisfarbpalette durch eine Palette zu ersetz
 
 
 ## 24.01
-- [ ] Hinzufügen der Funktionalität des Level-Exports zu ScriptableObject mit automatischer Nummerierung und Speicherung in einem Ordner.
-- [ ] Hinzufügen der Möglichkeit, einen bestehenden Level über die Dropdown-Liste aller Dateien zu laden, um ihn zu bearbeiten.
-- [ ] Entfernen die Funktion zur Erstellung von Hinweisen aus dem Hauptspiel
-- [ ] Implementierung der Funktion zur Erstellung von Hinweisen direkt im Editor und der Möglichkeit, diese zu ändern
-
-...
-
-
-## 31.01
-- [ ] ...
-- [ ] ...
-- [ ] ...
-- [ ] ...
-
-...
-
+- [x] Hinzufügen der Funktionalität des Level-Exports zu ScriptableObject mit automatischer Nummerierung und Speicherung in einem Ordner.
+- [x] Hinzufügen der Möglichkeit, einen bestehenden Level über die Dropdown-Liste aller Dateien zu laden, um ihn zu bearbeiten.
+- [x] Überprüfung des Codes auf Logikfehler und Bugs
+- [x] Korrigieren den Code, indem zusätzlich Kommentare hinzufügen und den Code abschliessen.
+Heute habe ich das Projekt überraschenderweise vollständig abgeschlossen. Es stellte sich heraus, dass es nicht so groß und kompliziert ist, so dass ich es eine Woche früher fertiggestellt habe. Das Einzige, was ich noch tun muss, ist, den Code schön aussehen zu lassen und Reflexion zu schreiben.
 
 # Reflexion
-
-...
+Dieses Projekt war einfach genug und sogar einfacher, als ich es mir vorgestellt hatte. Es stellte sich heraus, dass es nicht einmal ein separates Unity-Projekt benötigt, um den Editor zu erstellen, sondern nur so eine interessante Funktion, um ähnliche Fenster bereits in einem bestehenden Projekt zu erstellen. Letztendlich wird mir dieses Projekt später von unschätzbarem Wert sein, da ich das Spiel auch in den nächsten LPs verbessern und vervollständigen werde. Alles in allem war das Projekt interessant, ich habe neue Funktionen und andere interessante Dinge gelernt.
